@@ -2,7 +2,7 @@ import config from '../set-up/config';
 import invokeFunc from '../set-up/invoke';
 import queryFunc from '../set-up/query';
 const uuidv4 = require('uuid/v4');
-const request = require('request');
+// const request = require('request');
 const amqp = require('amqplib/callback_api');
 // var RedisClustr = require('redis-clustr');
 var url = require('url');
@@ -150,11 +150,11 @@ export async function createConnection(client, clientNo) {
               method: 'GET',
               uri: config.iotDashUrl + data
           }
-          request(options, function (error, response, body) {
-              console.log('error:', error); // null if no error occurs, else print error
-              console.log('statusCode:', response && response.statusCode); // print the response status code
-              console.log('body:', body); // print the output body on console
-           });
+          // request(options, function (error, response, body) {
+          //     console.log('error:', error); // null if no error occurs, else print error
+          //     console.log('statusCode:', response && response.statusCode); // print the response status code
+          //     console.log('body:', body); // print the output body on console
+          //  });
             setValue(msg.properties.correlationId, data);
             ch.ack(msg);
           };
