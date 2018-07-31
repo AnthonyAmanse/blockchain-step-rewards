@@ -1,31 +1,27 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: shop-ca-{{ EVENT_NAME }}
+  name: shop-ca
   labels:
     app: shop-ca
-    event: {{ EVENT_NAME }}
 spec:
   type: ClusterIP
   ports:
     - port: 7054
   selector:
     app: shop-ca
-    event: {{ EVENT_NAME }}
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: shop-ca-deployment-{{ EVENT_NAME }}
+  name: shop-ca-deployment
   labels:
     app: shop-ca
-    event: {{ EVENT_NAME }}
 spec:
   template:
     metadata:
       labels:
         app: shop-ca
-        event: {{ EVENT_NAME }}
     spec:
       containers:
       - image: hyperledger/fabric-ca:1.2.0
@@ -43,10 +39,10 @@ spec:
         volumeMounts:
         - name: shop-ca-storage
           mountPath: /db
-          subPath: shop-ca-db-{{ EVENT_NAME }}
+          subPath: shop-ca-db
         - name: shared-artifacts-storage
           mountPath: /ca
-          subPath: shop-ca-config-{{ EVENT_NAME }}
+          subPath: shop-ca-config
       volumes:
       - name: shop-ca-storage
         persistentVolumeClaim:

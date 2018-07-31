@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: blockchain-setup-{{ EVENT_NAME }}
+  name: blockchain-setup
   labels:
     app: blockchain-setup
-    event: {{ EVENT_NAME }}
 spec:
   restartPolicy: "Never"
   containers:
@@ -33,7 +32,7 @@ spec:
         path: /var/run/docker.sock
     - name: secret-volume
       secret:
-        secretName: secret-files-{{ EVENT_NAME }}
+        secretName: secret-files
         items:
           - key: config.json
             path: config

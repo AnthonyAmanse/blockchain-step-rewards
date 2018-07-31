@@ -28,20 +28,20 @@ Organizations:
   ID: ShopOrgMSP
   MSPDir: cli/peers/peerOrganizations/shop-org/msp
   AnchorPeers:
-  - Host: shop-peer-cfsummit
+  - Host: shop-peer
     Port: 7051
 - &FitCoinOrg
   Name: FitCoinOrgMSP
   ID: FitCoinOrgMSP
   MSPDir: cli/peers/peerOrganizations/fitcoin-org/msp
   AnchorPeers:
-  - Host: fitcoin-peer-cfsummit
+  - Host: fitcoin-peer
     Port: 7051
 
 Orderer: &OrdererDefaults
   OrdererType: solo
   Addresses:
-  - orderer0-cfsummit:7050
+  - orderer0:7050
   BatchTimeout: 2s
   BatchSize:
     MaxMessageCount: 10

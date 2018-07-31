@@ -10,8 +10,8 @@ CLIPATH=$PROJPATH/cli/peers
 ORDERERS=$CLIPATH/ordererOrganizations
 PEERS=$CLIPATH/peerOrganizations
 
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' configtx.yaml.template > configtx.yaml
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' crypto-config.yaml.template > crypto-config.yaml
+# sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' configtx.yaml.template > configtx.yaml
+# sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' crypto-config.yaml.template > crypto-config.yaml
 
 rm -rf $CLIPATH
 $PROJPATH/cryptogen generate --config=$PROJPATH/crypto-config.yaml --output=$CLIPATH
@@ -20,9 +20,9 @@ sh generate-cfgtx.sh
 
 rm -rf $PROJPATH/{orderer,shopPeer,fitcoinPeer}/crypto
 mkdir $PROJPATH/{orderer,shopPeer,fitcoinPeer}/crypto
-cp -r $ORDERERS/orderer-org/orderers/orderer0-${EVENT_NAME}/{msp,tls} $PROJPATH/orderer/crypto
-cp -r $PEERS/shop-org/peers/shop-peer-${EVENT_NAME}/{msp,tls} $PROJPATH/shopPeer/crypto
-cp -r $PEERS/fitcoin-org/peers/fitcoin-peer-${EVENT_NAME}/{msp,tls} $PROJPATH/fitcoinPeer/crypto
+cp -r $ORDERERS/orderer-org/orderers/orderer0/{msp,tls} $PROJPATH/orderer/crypto
+cp -r $PEERS/shop-org/peers/shop-peer/{msp,tls} $PROJPATH/shopPeer/crypto
+cp -r $PEERS/fitcoin-org/peers/fitcoin-peer/{msp,tls} $PROJPATH/fitcoinPeer/crypto
 cp $CLIPATH/genesis.block $PROJPATH/orderer/crypto/
 
 SHOPCAPATH=$PROJPATH/shopCertificateAuthority
