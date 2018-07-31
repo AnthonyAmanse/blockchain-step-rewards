@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: peer-volume
+  name: shared-artifacts-volume
 spec:
   capacity:
     storage: "20Gi"
@@ -9,19 +9,19 @@ spec:
     - ReadWriteMany
   claimRef:
     namespace: default
-    name: peer-claim
+    name: shared-artifacts-claim
   nfs:
-    server: "fsf-dal1301b-fz.adn.networklayer.com"
-    path: "/IBM02SEV1323471_1066/data01"
+    server: "fsf-dal1301g-fz.adn.networklayer.com"
+    path: "/IBM02SEV1323471_1607/data01"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   annotations:
     volume.beta.kubernetes.io/storage-class: "" # Comment this line to use dynamic provisioning (paid)
-  name: peer-claim
+  name: shared-artifacts-claim
   labels:
-    app: peer-volume
+    app: shared-artifacts-volume
 spec:
   accessModes:
     - ReadWriteMany

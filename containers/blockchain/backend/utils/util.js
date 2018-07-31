@@ -163,7 +163,7 @@ export async function createConnection(client, clientNo) {
             reply(ch, msg, JSON.stringify(value));
           }).catch(err => {
             console.error("Failed request on " + clientNo);
-            console.error("Failed request : " + input.params);
+            console.error("Failed request : " + JSON.stringify(input.params));
             console.error(" Error Message : " + err.message);
             reply(ch, msg, JSON.stringify({
               message: "failed",

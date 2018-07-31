@@ -1,33 +1,37 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: shop-ca
+  name: shop-ca-{{ EVENT_NAME }}
   labels:
     app: shop-ca
+    event: {{ EVENT_NAME }}
 spec:
   type: ClusterIP
   ports:
     - port: 7054
   selector:
     app: shop-ca
+    event: {{ EVENT_NAME }}
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: shop-ca-deployment
+  name: shop-ca-deployment-{{ EVENT_NAME }}
   labels:
     app: shop-ca
+    event: {{ EVENT_NAME }}
 spec:
   template:
     metadata:
       labels:
         app: shop-ca
+        event: {{ EVENT_NAME }}
     spec:
       containers:
-      - image: anthonyamanse/kubecon-shop-ca:latest
+      - image: hyperledger/fabric-ca:1.2.0
         imagePullPolicy: Always
-        command: ["fabric-ca-server"]
-        args: ["start","--db.datasource","db/shop-fabric-ca-server.db"]
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /ca/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; fabric-ca-server start --db.datasource /db/shop-fabric-ca-server.db"]
+        # args: ["start","--db.datasource","db/shop-fabric-ca-server.db"]
         name: shop-ca
         ports:
         - containerPort: 7054
@@ -38,9 +42,15 @@ spec:
             value: "false"
         volumeMounts:
         - name: shop-ca-storage
-          mountPath: /ca/db
-          subPath: shop-ca-db
+          mountPath: /db
+          subPath: shop-ca-db-{{ EVENT_NAME }}
+        - name: shared-artifacts-storage
+          mountPath: /ca
+          subPath: shop-ca-config-{{ EVENT_NAME }}
       volumes:
       - name: shop-ca-storage
         persistentVolumeClaim:
           claimName: org-ca-claim
+      - name: shared-artifacts-storage
+        persistentVolumeClaim:
+          claimName: shared-artifacts-claim

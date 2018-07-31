@@ -2,6 +2,7 @@
 var resolve = require('path').resolve;
 var fs = require("fs");
 const basePath = resolve(__dirname, './certs');
+const eventName = process.env.EVENT_NAME;
 const readCryptoFile = filename => fs.readFileSync(resolve(basePath, filename)).toString();
 const config = {
   channelName: 'mychannel',
@@ -9,32 +10,31 @@ const config = {
   chaincodeId: 'bcfit',
   chaincodeVersion: '1',
   chaincodePath: 'bcfit',
-  rabbitmq: 'amqps://admin:QWERTY@portal-ssl334-23.bmix-dal-yp-abc10717-6f73-4f63-b039-a1d2485c1566.devadvo-us-ibm-com.composedb.com:38919/bmix-dal-yp-abc10717-6f73-4f63-b039-a1d2485c1566',
+  rabbitmq: 'amqps://admin:IXIHROUISBZJPEPW@portal-ssl285-31.bmix-dal-yp-70b203d2-491a-4977-a5fb-bddf83921f76.421838044.composedb.com:51900/bmix-dal-yp-70b203d2-491a-4977-a5fb-bddf83921f76',
   // redisHost: 'redis-server',
   // redisPort: 7000,
-  redisUrl: 'redis://admin:QWERTY@sl-us-south-1-portal.23.dblayer.com:38916',
-  iotDashUrl: 'https://think-iot-processor.mybluemix.net/steps?message=',
+  redisUrl: 'redis://admin:KIQKOJWXUBFIXGEP@sl-us-south-1-portal.31.dblayer.com:52062',
   orderer: {
-    hostname: 'orderer0',
-    url: 'grpc://orderer0:7050',
+    hostname: 'orderer0' + '-' + eventName,
+    url: 'grpc://orderer0' + '-' + eventName + ':7050',
     pem: readCryptoFile('ordererOrg.pem')
   },
   peers: [{
     peer: {
-      hostname: 'shop-peer',
-      url: 'grpc://shop-peer:7051',
-      eventHubUrl: 'grpc://shop-peer:7053',
+      hostname: 'shop-peer' + '-' + eventName,
+      url: 'grpc://shop-peer' + '-' + eventName + ':7051',
+      eventHubUrl: 'grpc://shop-peer' + '-' + eventName + ':7053',
       pem: readCryptoFile('shopOrg.pem'),
-      userKeystoreDBName: 'seller_db',
+      userKeystoreDBName: 'seller_db' + '-' + eventName,
       userKeystoreDBUrl: 'http://ca-datastore:5984',
-      stateDBName: 'member_db',
-      stateDBUrl: 'http://shop-statedb:5984',
+      stateDBName: 'member_db' + '-' + eventName,
+      stateDBUrl: 'http://shop-statedb' + '-' + eventName + ':5984',
       org: 'org.ShopOrg',
       userType: 'seller'
     },
     ca: {
-      hostname: 'shop-ca',
-      url: 'http://shop-ca:7054',
+      hostname: 'shop-ca' + '-' + eventName,
+      url: 'http://shop-ca' + '-' + eventName + ':7054',
       mspId: 'ShopOrgMSP',
       caName: 'shop-org'
     },
@@ -44,20 +44,20 @@ const config = {
     }
   }, {
     peer: {
-      hostname: 'fitcoin-peer',
-      url: 'grpc://fitcoin-peer:7051',
+      hostname: 'fitcoin-peer' + '-' + eventName,
+      url: 'grpc://fitcoin-peer' + '-' + eventName + ':7051',
       pem: readCryptoFile('fitcoinOrg.pem'),
-      userKeystoreDBName: 'user_db',
+      userKeystoreDBName: 'user_db' + '-' + eventName,
       userKeystoreDBUrl: 'http://ca-datastore:5984',
-      stateDBName: 'member_db',
-      stateDBUrl: 'http://fitcoin-statedb:5984',
-      eventHubUrl: 'grpc://fitcoin-peer:7053',
+      stateDBName: 'member_db' + '-' + eventName,
+      stateDBUrl: 'http://fitcoin-statedb' + '-' + eventName + ':5984',
+      eventHubUrl: 'grpc://fitcoin-peer' + '-' + eventName + ':7053',
       org: 'org.FitCoinOrg',
       userType: 'user'
     },
     ca: {
-      hostname: 'fitcoin-ca',
-      url: 'http://fitcoin-ca:7054',
+      hostname: 'fitcoin-ca' + '-' + eventName,
+      url: 'http://fitcoin-ca' + '-' + eventName + ':7054',
       mspId: 'FitCoinOrgMSP',
       caName: 'fitcoin-org'
     },

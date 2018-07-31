@@ -11,8 +11,8 @@ spec:
     namespace: default
     name: couchdb-claim
   nfs:
-    server: "NFS_SERVER"
-    path: "/NFS_PATH"
+    server: "fsf-dal1301a-fz.adn.networklayer.com"
+    path: "/IBM02SEV1323471_1067/data01"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

@@ -1,17 +1,19 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: fitcoin-backend-deployment
+  name: fitcoin-backend-deployment-{{ EVENT_NAME }}
   labels:
     app: fitcoin-backend
+    event: {{ EVENT_NAME }}
 spec:
   template:
     metadata:
       labels:
         app: fitcoin-backend
+        event: {{ EVENT_NAME }}
     spec:
       containers:
-      - image: anthonyamanse/kubecon-backend:latest
+      - image: anthonyamanse/kubecon-backend:event
         imagePullPolicy: Always
         name: fitcoin-backend
         env:
@@ -20,16 +22,14 @@ spec:
           - name: DOCKER_SOCKET_PATH
             value: "/host/var/run/docker.sock"
           - name: DOCKER_CCENV_IMAGE
-            value: "hyperledger/fabric-ccenv:x86_64-1.0.6"
+            value: "hyperledger/fabric-ccenv:1.2.0"
           - name: SECRETSDIR
             value: "/host/var/run/secrets"
           - name: RABBITMQQUEUE
-            value: "user_queue"
+            value: "user_queue-{{ EVENT_NAME }}"
           - name: MESSAGEEXPIRY
             value: "400"
           - name: EVENTEMITTER
-            value: "false"
-          - name: SENDTOIOT
             value: "false"
           - name: SCALECLIENT
             value: "1"
@@ -44,7 +44,7 @@ spec:
             path: /var/run/docker.sock
         - name: secret-volume
           secret:
-            secretName: secret-files
+            secretName: secret-files-{{ EVENT_NAME }}
             items:
               - key: config.json
                 path: config

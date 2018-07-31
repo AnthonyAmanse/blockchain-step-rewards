@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: orderer0
+  name: orderer0-{{ EVENT_NAME }}
   labels:
     app: orderer0
+    event: {{ EVENT_NAME }}
 spec:
   type: ClusterIP
   ports:
@@ -11,24 +12,27 @@ spec:
       protocol: TCP
   selector:
     app: orderer0
+    event: {{ EVENT_NAME }}
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: orderer0-deployment
+  name: orderer0-deployment-{{ EVENT_NAME }}
   labels:
     app: orderer0
+    event: {{ EVENT_NAME }}
 spec:
   template:
     metadata:
       labels:
         app: orderer0
+        event: {{ EVENT_NAME }}
     spec:
       containers:
-      - image: anthonyamanse/kubecon-orderer-peer:latest
+      - image: hyperledger/fabric-orderer:1.2.0
         imagePullPolicy: Always
         workingDir: /orderer
-        command: ["orderer"]
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /orderer/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; orderer"]
         name: orderer0
         ports:
         - containerPort: 7050
@@ -57,8 +61,14 @@ spec:
         volumeMounts:
           - name: orderer0-storage
             mountPath: /var/hyperledger/production
-            subPath: orderer0
+            subPath: orderer0-{{ EVENT_NAME }}
+          - name: shared-artifacts-storage
+            mountPath: /orderer
+            subPath: orderer0-config-{{ EVENT_NAME }}
       volumes:
         - name: orderer0-storage
           persistentVolumeClaim:
             claimName: peer-claim
+        - name: shared-artifacts-storage
+          persistentVolumeClaim:
+            claimName: shared-artifacts-claim
