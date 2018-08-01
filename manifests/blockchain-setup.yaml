@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: blockchain-setup
+  name: blockchain-setup-{{ EVENT_NAME }}
   labels:
     app: blockchain-setup
 spec:
@@ -18,7 +18,7 @@ spec:
       - name: DOCKER_SOCKET_PATH
         value: /host/var/run/docker.sock
       - name: DOCKER_CCENV_IMAGE
-        value: "hyperledger/fabric-ccenv:1.2.0"
+        value: "hyperledger/fabric-ccenv:x86_64-1.0.6"
       - name: SECRETSDIR
         value: /host/var/run/secrets
     volumeMounts:
@@ -32,7 +32,7 @@ spec:
         path: /var/run/docker.sock
     - name: secret-volume
       secret:
-        secretName: secret-files
+        secretName: secret-files-{{ EVENT_NAME }}
         items:
           - key: config.json
             path: config

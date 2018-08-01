@@ -24,7 +24,7 @@ spec:
         app: shop-ca
     spec:
       containers:
-      - image: hyperledger/fabric-ca:1.2.0
+      - image: hyperledger/fabric-ca:x86_64-1.0.6
         imagePullPolicy: Always
         command: ["sh", "-c", "sleep 5 && while [ ! -f /ca/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; fabric-ca-server start --db.datasource /db/shop-fabric-ca-server.db"]
         # args: ["start","--db.datasource","db/shop-fabric-ca-server.db"]
@@ -39,7 +39,7 @@ spec:
         volumeMounts:
         - name: shop-ca-storage
           mountPath: /db
-          subPath: shop-ca-db
+          subPath: shop-ca-db-new
         - name: shared-artifacts-storage
           mountPath: /ca
           subPath: shop-ca-config

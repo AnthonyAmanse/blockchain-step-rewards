@@ -25,7 +25,7 @@ spec:
         app: orderer0
     spec:
       containers:
-      - image: hyperledger/fabric-orderer:1.2.0
+      - image: hyperledger/fabric-orderer:x86_64-1.0.6
         imagePullPolicy: Always
         workingDir: /orderer
         command: ["sh", "-c", "sleep 5 && while [ ! -f /orderer/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; orderer"]
@@ -57,7 +57,7 @@ spec:
         volumeMounts:
           - name: orderer0-storage
             mountPath: /var/hyperledger/production
-            subPath: orderer0-test
+            subPath: orderer0-new
           - name: shared-artifacts-storage
             mountPath: /orderer
             subPath: orderer0-config

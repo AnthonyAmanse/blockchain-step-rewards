@@ -32,7 +32,7 @@ spec:
         volumeMounts:
         - name: fitcoin-datastore-storage
           mountPath: /opt/couchdb/data
-          subPath: fitcoin-statedb
+          subPath: fitcoin-statedb-new
       volumes:
       - name: fitcoin-datastore-storage
         persistentVolumeClaim:

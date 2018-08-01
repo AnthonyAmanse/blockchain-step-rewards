@@ -32,7 +32,7 @@ spec:
         volumeMounts:
         - name: ca-datastore-storage
           mountPath: /opt/couchdb/data
-          subPath: ca-datastore
+          subPath: ca-datastore-new
       volumes:
       - name: ca-datastore-storage
         persistentVolumeClaim:

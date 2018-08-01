@@ -27,7 +27,7 @@ spec:
         app: shop-peer
     spec:
       containers:
-      - image: hyperledger/fabric-peer:1.2.0
+      - image: hyperledger/fabric-peer:x86_64-1.0.6
         imagePullPolicy: Always
         workingDir: /peer
         command: ["sh", "-c", "sleep 5 && while [ ! -f /peer/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; peer node start"]
@@ -91,7 +91,7 @@ spec:
             mountPath: /host/var/run/docker.sock
           - name: shop-peer-storage
             mountPath: /var/hyperledger/production
-            subPath: shop-peer-test
+            subPath: shop-peer-new
           - name: shared-artifacts-storage
             mountPath: /peer
             subPath: shop-peer-config

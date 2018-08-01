@@ -32,7 +32,7 @@ spec:
         volumeMounts:
         - name: shop-datastore-storage
           mountPath: /opt/couchdb/data
-          subPath: shop-statedb
+          subPath: shop-statedb-new
       volumes:
       - name: shop-datastore-storage
         persistentVolumeClaim:

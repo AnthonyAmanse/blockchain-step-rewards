@@ -31,8 +31,8 @@ sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-ca.yaml | kubectl apply -f -
 ```
 
 ```
-export FITCOIN_CA_POD=$(kubectl get pods -l app=fitcoin-ca,event=${EVENT_NAME} -o jsonpath={.items..metadata.name})
-export SHOP_CA_POD=$(kubectl get pods -l app=shop-ca,event=${EVENT_NAME} -o jsonpath={.items..metadata.name})
+export FITCOIN_CA_POD=$(kubectl get pods -l app=fitcoin-ca -o jsonpath={.items..metadata.name})
+export SHOP_CA_POD=$(kubectl get pods -l app=shop-ca -o jsonpath={.items..metadata.name})
 
 kubectl cp ../containers/blockchain/fitcoinCertificateAuthority/ca $FITCOIN_CA_POD:/ca/
 kubectl cp ../containers/blockchain/fitcoinCertificateAuthority/tls $FITCOIN_CA_POD:/ca/
@@ -53,19 +53,18 @@ sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-statedb.yaml | kubectl apply 
 
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' orderer0.yaml | kubectl apply -f -
 
-export ORDERER_POD=$(kubectl get pods -l app=orderer0,event=${EVENT_NAME} -o jsonpath={.items..metadata.name})
+export ORDERER_POD=$(kubectl get pods -l app=orderer0 -o jsonpath={.items..metadata.name})
 kubectl cp ../containers/blockchain/orderer/crypto $ORDERER_POD:/orderer/
 kubectl exec -ti $ORDERER_POD -- touch /orderer/bootstrapped
 
 
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-peer.yaml | kubectl apply -f -
-export SHOP_PEER_POD=$(kubectl get pods -l app=shop-peer,event=${EVENT_NAME} -o jsonpath={.items..metadata.name})
-kubectl cp ../containers/blockchain/shopPeer/crypto $SHOP_PEER_POD:/peer/
-
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' fitcoin-peer.yaml | kubectl apply -f -
-export FITCOIN_PEER_POD=$(kubectl get pods -l app=fitcoin-peer,event=${EVENT_NAME} -o jsonpath={.items..metadata.name})
-kubectl cp ../containers/blockchain/fitcoinPeer/crypto $FITCOIN_PEER_POD:/peer/
+export SHOP_PEER_POD=$(kubectl get pods -l app=shop-peer -o jsonpath={.items..metadata.name})
+export FITCOIN_PEER_POD=$(kubectl get pods -l app=fitcoin-peer -o jsonpath={.items..metadata.name})
 
+kubectl cp ../containers/blockchain/shopPeer/crypto $SHOP_PEER_POD:/peer/
+kubectl cp ../containers/blockchain/fitcoinPeer/crypto $FITCOIN_PEER_POD:/peer/
 
 kubectl exec -ti $SHOP_PEER_POD -- touch /peer/bootstrapped
 kubectl exec -ti $FITCOIN_PEER_POD -- touch /peer/bootstrapped
