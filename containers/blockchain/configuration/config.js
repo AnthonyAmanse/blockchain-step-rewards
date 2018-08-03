@@ -4,8 +4,6 @@ var fs = require("fs");
 const basePath = resolve(__dirname, './certs');
 const readCryptoFile = filename => fs.readFileSync(resolve(basePath, filename)).toString();
 const config = {
-  channelName: 'mychannel',
-  channelConfig: fs.readFileSync(resolve(__dirname, 'channel.tx')),
   chaincodeId: 'bcfit',
   chaincodeVersion: '1',
   chaincodePath: 'bcfit',

@@ -13,7 +13,7 @@ spec:
         event: {{ EVENT_NAME }}
     spec:
       containers:
-      - image: anthonyamanse/kubecon-backend:event
+      - image: anthonyamanse/kubecon-backend:test-event
         imagePullPolicy: Always
         name: fitcoin-backend
         env:
@@ -33,20 +33,28 @@ spec:
             value: "false"
           - name: SCALECLIENT
             value: "1"
+          - name: EVENT_NAME
+            value: {{ EVENT_NAME }}
         volumeMounts:
           - name: dockersocket
             mountPath: /host/var/run/docker.sock
           - name: secret-volume
-            mountPath: /host/var/run/secrets
+            mountPath: /host/var/run/secrets/config
+          - name: channel-volume
+            mountPath: /host/var/run/secrets/channel
       volumes:
         - name: dockersocket
           hostPath:
             path: /var/run/docker.sock
         - name: secret-volume
           secret:
-            secretName: secret-files-{{ EVENT_NAME }}
+            secretName: secret-config
             items:
               - key: config.json
                 path: config
+        - name: channel-volume
+          secret:
+            secretName: channel-{{ EVENT_NAME }}
+            items:
               - key: channel.tx
                 path: channel

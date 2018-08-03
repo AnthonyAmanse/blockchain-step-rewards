@@ -23,11 +23,15 @@ docker push $DOCKERHUB_USERNAME/kubecon-rabbitclient-api:$DOCKER_TAGS
 ```
 
 kubectl create secret generic secret-files-${EVENT_NAME} --from-file=config.json=configuration/config.json --from-file=channel.tx=configuration/channel.tx
+
+kubectl create secret generic channel-${EVENT_NAME} --from-file=channel.tx=configuration/channel.tx
+kubectl create secret generic secret-config --from-file=config.json=configuration/config.json
+
 ```
 
 ```
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' fitcoin-ca.yaml | kubectl apply -f -
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-ca.yaml | kubectl apply -f -
+kubectl apply -f fitcoin-ca.yaml
+kubectl apply -f shop-ca.yaml
 ```
 
 ```
@@ -45,21 +49,22 @@ kubectl cp ../containers/blockchain/shopCertificateAuthority/fabric-ca-server-co
 kubectl exec -ti $FITCOIN_CA_POD -- touch /ca/bootstrapped
 kubectl exec -ti $SHOP_CA_POD -- touch /ca/bootstrapped
 ```
+> try kubectl cp /tmp/foo_dir <some-pod>:/tmp/bar_dir
 
 kubectl apply -f ca-datastore.yaml
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' fitcoin-statedb.yaml | kubectl apply -f -
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-statedb.yaml | kubectl apply -f -
+kubectl apply -f fitcoin-statedb.yaml
+kubectl apply -f shop-statedb.yaml
 
 
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' orderer0.yaml | kubectl apply -f -
+kubectl apply -f orderer0.yaml
+kubectl apply -f shop-peer.yaml
+kubectl apply -f fitcoin-peer.yaml
 
 export ORDERER_POD=$(kubectl get pods -l app=orderer0 -o jsonpath={.items..metadata.name})
 kubectl cp ../containers/blockchain/orderer/crypto $ORDERER_POD:/orderer/
 kubectl exec -ti $ORDERER_POD -- touch /orderer/bootstrapped
 
 
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-peer.yaml | kubectl apply -f -
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' fitcoin-peer.yaml | kubectl apply -f -
 export SHOP_PEER_POD=$(kubectl get pods -l app=shop-peer -o jsonpath={.items..metadata.name})
 export FITCOIN_PEER_POD=$(kubectl get pods -l app=fitcoin-peer -o jsonpath={.items..metadata.name})
 
@@ -71,8 +76,8 @@ kubectl exec -ti $FITCOIN_PEER_POD -- touch /peer/bootstrapped
 
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' blockchain-setup.yaml | kubectl apply -f -
 
-> This throws error at creating sample user
-
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-backend.yaml | kubectl apply -f -
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' fitcoin-backend.yaml | kubectl apply -f -
-sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' rabbitclient-api.yaml | kubectl apply -f -
+kubectl apply -f rabbitclient-api.yaml
+
+sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' ingress-shop.yaml | kubectl apply -f -

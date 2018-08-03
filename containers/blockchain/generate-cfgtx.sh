@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CHANNEL_NAME="mychannel"
+CHANNEL_NAME=$EVENT_NAME
 PROJPATH=$(pwd)
 CLIPATH=$PROJPATH/cli/peers
 

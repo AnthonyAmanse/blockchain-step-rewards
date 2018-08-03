@@ -10,9 +10,6 @@ CLIPATH=$PROJPATH/cli/peers
 ORDERERS=$CLIPATH/ordererOrganizations
 PEERS=$CLIPATH/peerOrganizations
 
-# sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' configtx.yaml.template > configtx.yaml
-# sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' crypto-config.yaml.template > crypto-config.yaml
-
 rm -rf $CLIPATH
 $PROJPATH/cryptogen generate --config=$PROJPATH/crypto-config.yaml --output=$CLIPATH
 

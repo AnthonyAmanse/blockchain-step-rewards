@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: shop-ingress-{{ EVENT_NAME }}
+  labels:
+    event: {{ EVENT_NAME }}
+spec:
+  rules:
+  - host: {{ EVENT_NAME }}.anthony-prod.us-south.containers.mybluemix.net
+    http:
+      paths:
+      - backend:
+          serviceName: shop-backend-{{ EVENT_NAME }}
+          servicePort: 3030

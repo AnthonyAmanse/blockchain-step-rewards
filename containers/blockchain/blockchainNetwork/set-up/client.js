@@ -86,7 +86,9 @@ export class OrganizationClient extends EventEmitter {
       });
       defaultEventHub.connect();
       defaultEventHub.registerBlockEvent(block => {
-        this.emit('block', utils.unmarshalBlock(block));
+        if (block.data.data[0].payload.header.channel_header.channel_id == process.env.EVENT_NAME) {
+          this.emit('block', utils.unmarshalBlock(block));
+        }
       });
       this._eventHubs.push(defaultEventHub);
     } catch(e) {

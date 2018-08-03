@@ -7,7 +7,7 @@ metadata:
 spec:
   restartPolicy: "Never"
   containers:
-  - image: anthonyamanse/kubecon-blockchain-setup:event
+  - image: anthonyamanse/kubecon-blockchain-setup:test-event
     imagePullPolicy: Always
     # command: ["sleep"]
     # args: ["10m"]
@@ -21,20 +21,28 @@ spec:
         value: "hyperledger/fabric-ccenv:x86_64-1.0.6"
       - name: SECRETSDIR
         value: /host/var/run/secrets
+      - name: EVENT_NAME
+        value: {{ EVENT_NAME }}
     volumeMounts:
       - name: dockersocket
         mountPath: /host/var/run/docker.sock
       - name: secret-volume
-        mountPath: /host/var/run/secrets
+        mountPath: /host/var/run/secrets/config
+      - name: channel-volume
+        mountPath: /host/var/run/secrets/channel
   volumes:
     - name: dockersocket
       hostPath:
         path: /var/run/docker.sock
     - name: secret-volume
       secret:
-        secretName: secret-files-{{ EVENT_NAME }}
+        secretName: secret-config
         items:
           - key: config.json
             path: config
+    - name: channel-volume
+      secret:
+        secretName: channel-{{ EVENT_NAME }}
+        items:
           - key: channel.tx
             path: channel
