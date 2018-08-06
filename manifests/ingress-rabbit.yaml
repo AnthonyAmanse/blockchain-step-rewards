@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rabbitclient-api-ingress
+  labels:
+    app: rabbitclient-api
+spec:
+  tls:
+    - hosts:
+        - cloudcoin.us-south.containers.appdomain.cloud
+      secretName: cloudcoin
+  rules:
+  - host: cloudcoin.us-south.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /api
+        backend:
+          serviceName: rabbitclient-api
+          servicePort: 3000

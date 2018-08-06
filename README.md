@@ -21,9 +21,6 @@ docker push $DOCKERHUB_USERNAME/kubecon-rabbitclient-api:$DOCKER_TAGS
 ```
 
 ```
-
-kubectl create secret generic secret-files-${EVENT_NAME} --from-file=config.json=configuration/config.json --from-file=channel.tx=configuration/channel.tx
-
 kubectl create secret generic channel-${EVENT_NAME} --from-file=channel.tx=configuration/channel.tx
 kubectl create secret generic secret-config --from-file=config.json=configuration/config.json
 

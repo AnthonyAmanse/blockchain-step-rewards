@@ -22,7 +22,7 @@ spec:
           - name: DOCKER_SOCKET_PATH
             value: "/host/var/run/docker.sock"
           - name: DOCKER_CCENV_IMAGE
-            value: "hyperledger/fabric-ccenv:1.0.6"
+            value: "hyperledger/fabric-ccenv:x86_64-1.0.6"
           - name: SECRETSDIR
             value: "/host/var/run/secrets"
           - name: RABBITMQQUEUE

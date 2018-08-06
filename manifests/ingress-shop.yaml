@@ -5,8 +5,12 @@ metadata:
   labels:
     event: {{ EVENT_NAME }}
 spec:
+  tls:
+    - hosts:
+        - {{ EVENT_NAME }}.cloudcoin.us-south.containers.appdomain.cloud
+      secretName: cloudcoin
   rules:
-  - host: {{ EVENT_NAME }}.anthony-prod.us-south.containers.mybluemix.net
+  - host: {{ EVENT_NAME }}.cloudcoin.us-south.containers.appdomain.cloud
     http:
       paths:
       - backend:
