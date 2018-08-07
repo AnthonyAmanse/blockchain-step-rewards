@@ -48,11 +48,13 @@ kubectl exec -ti $SHOP_CA_POD -- touch /ca/bootstrapped
 ```
 > try kubectl cp /tmp/foo_dir <some-pod>:/tmp/bar_dir
 
+```
 kubectl apply -f ca-datastore.yaml
 kubectl apply -f fitcoin-statedb.yaml
 kubectl apply -f shop-statedb.yaml
+```
 
-
+```
 kubectl apply -f orderer0.yaml
 kubectl apply -f shop-peer.yaml
 kubectl apply -f fitcoin-peer.yaml
@@ -70,11 +72,36 @@ kubectl cp ../containers/blockchain/fitcoinPeer/crypto $FITCOIN_PEER_POD:/peer/
 
 kubectl exec -ti $SHOP_PEER_POD -- touch /peer/bootstrapped
 kubectl exec -ti $FITCOIN_PEER_POD -- touch /peer/bootstrapped
+```
 
+```
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' blockchain-setup.yaml | kubectl apply -f -
+```
 
+```
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' shop-backend.yaml | kubectl apply -f -
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' fitcoin-backend.yaml | kubectl apply -f -
-kubectl apply -f rabbitclient-api.yaml
-
 sed -e 's#{{ EVENT_NAME }}#'${EVENT_NAME}'#g' ingress-shop.yaml | kubectl apply -f -
+```
+
+```
+cd containers/
+
+docker build -t $DOCKERHUB_USERNAME/leaderboard:$DOCKER_TAGS leaderboard/
+docker build -t $DOCKERHUB_USERNAME/mobile-assets:$DOCKER_TAGS mobile-assets/
+docker build -t $DOCKERHUB_USERNAME/registeree-api:$DOCKER_TAGS registeree-api/
+
+docker push $DOCKERHUB_USERNAME/leaderboard:$DOCKER_TAGS
+docker push $DOCKERHUB_USERNAME/mobile-assets:$DOCKER_TAGS
+docker push $DOCKERHUB_USERNAME/registeree-api:$DOCKER_TAGS
+```
+
+```
+kubectl apply -f leaderboard.yaml
+kubectl apply -f mobile-assets.yaml
+kubectl apply -f registeree.yaml
+```
+
+```
+kubectl apply -f ingress-prod.yaml
+```

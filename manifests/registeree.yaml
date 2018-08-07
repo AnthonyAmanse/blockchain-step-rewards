@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registeree
+  labels:
+    app: registeree
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: registeree
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: registeree-deployment
+  labels:
+    app: registeree
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: registeree
+    spec:
+      containers:
+        - image: anthonyamanse/registeree-api:test-event
+          imagePullPolicy: Always
+          name: registeree
+          env:
+            - name: CLOUDFUNCTION_AVATAR
+              value: 'https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/0c8f59e1d1d5405e25c88917bb965b2defd073b8ed3b5717183d253c13758c1a/api2/generateAvatar'
+            - name: MONGODB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-url
+                  key: MONGODB_URL
+          volumeMounts:
+            - name: mongodb-cert
+              mountPath: "/etc/ssl"
+              readOnly: true
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: mongodb-cert
+          secret:
+            secretName: mongodb-cert-secret

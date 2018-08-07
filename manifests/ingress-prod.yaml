@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-microservices
+  labels:
+    app: ingress-microservices
+spec:
+  tls:
+    - hosts:
+        - cloudcoin.us-south.containers.appdomain.cloud
+      secretName: cloudcoin
+  rules:
+  - host: cloudcoin.us-south.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /api
+        backend:
+          serviceName: rabbitclient-api
+          servicePort: 3000
+      - path: /dashboard
+        backend:
+          serviceName: block-dashboard
+          servicePort: 8080
+      - path: /public
+        backend:
+          serviceName: block-dashboard
+          servicePort: 8080
+      - path: /registerees
+        backend:
+          serviceName: registeree
+          servicePort: 8080
+      - path: /leaderboard
+        backend:
+          serviceName: leaderboard
+          servicePort: 8080
+      - path: /pages
+        backend:
+          serviceName: mobile-assets
+          servicePort: 8080

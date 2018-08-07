@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: leaderboard
+  labels:
+    app: leaderboard
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: ClusterIP
+  selector:
+    app: leaderboard
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: leaderboard-deployment
+  labels:
+    app: leaderboard
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: leaderboard
+    spec:
+      containers:
+        - image: anthonyamanse/leaderboard:test-event
+          imagePullPolicy: Always
+          name: leaderboard
+          env:
+            - name: MONGODB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-url
+                  key: MONGODB_URL
+          volumeMounts:
+            - name: mongodb-cert
+              mountPath: "/etc/ssl"
+              readOnly: true
+          ports:
+            - containerPort: 8080
+      volumes:
+        - name: mongodb-cert
+          secret:
+            secretName: mongodb-cert-secret

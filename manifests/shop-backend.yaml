@@ -51,7 +51,7 @@ spec:
           - name: EVENTEMITTER
             value: "true"
           - name: SCALECLIENT
-            value: "1"
+            value: "3"
           - name: EVENT_NAME
             value: {{ EVENT_NAME }}
         volumeMounts:
