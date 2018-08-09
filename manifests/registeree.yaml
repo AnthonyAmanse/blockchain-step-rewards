@@ -34,7 +34,7 @@ spec:
           name: registeree
           env:
             - name: CLOUDFUNCTION_AVATAR
-              value: 'https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/0c8f59e1d1d5405e25c88917bb965b2defd073b8ed3b5717183d253c13758c1a/api2/generateAvatar'
+              value: 'https://service.us.apiconnect.ibmcloud.com/gws/apigateway/api/41673fcc768037210b6da5d92c94d18ab697b509c6227a9f7847728ec16a9b36/avatar'
             - name: MONGODB_URL
               valueFrom:
                 configMapKeyRef:
