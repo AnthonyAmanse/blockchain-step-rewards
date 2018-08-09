@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-for-admins
+  labels:
+    app: ingress-for-admins
+spec:
+  tls:
+    - hosts:
+        - admin.cloudcoin.us-south.containers.appdomain.cloud
+      secretName: cloudcoin
+  rules:
+    - host: admin.cloudcoin.us-south.containers.appdomain.cloud
+      http:
+        paths:
+          - path: /events
+            backend:
+              serviceName: events
+              servicePort: 8080
