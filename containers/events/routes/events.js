@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 
 const EventModel = require("../models/event");
+var noSchema = mongoose.Schema({ event: String, any: {} }, { strict: false, strictQuery: false })
+var Limits = mongoose.model('Limits', noSchema, 'product-limits')
 
 // endpoints for pages
 // Add an event
@@ -36,6 +39,19 @@ router.get("/approved", function(req, res) {
       res.send(err);
     } else {
       res.send(events);
+    }
+  });
+});
+
+
+router.get("/limits/:eventId", function(req, res) {
+  Limits.findOne({"event": req.params.eventId}, function(err, event) {
+    if (err) {
+      res.send(err);
+    } else if (event) {
+      res.send(event);
+    } else {
+      res.send({"status":"not_found","message":"Event " + req.params.eventId + " not found."});
     }
   });
 });
