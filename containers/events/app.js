@@ -28,6 +28,9 @@ let mongoDbOptions = {
 
 mongoose.connection.on("error", function(err) {
   console.log("Mongoose default connection error: " + err);
+  setTimeout(function () {
+    mongoose.connect(mongoDbUrl, mongoDbOptions)
+  }, 3000)
 });
 
 mongoose.connection.on("open", function(err) {

@@ -29,7 +29,7 @@ spec:
         app: events
     spec:
       containers:
-        - image: anthonyamanse/events:1.0
+        - image: anthonyamanse/events:2.0
           imagePullPolicy: Always
           name: events
           env:

@@ -38,6 +38,9 @@ router.get("/approved", function(req, res) {
     if (err) {
       res.send(err);
     } else {
+      events.sort(function (a, b) {
+        return Math.abs(Date.now() - a.startDate) - Math.abs(Date.now() - b.startDate);
+      });
       res.send(events);
     }
   });

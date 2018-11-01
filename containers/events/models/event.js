@@ -8,7 +8,9 @@ let eventSchema = mongoose.Schema({
   eventStatus: String,
   approvalStatus: String,
   owner: String,
-  link: String
+  link: String,
+  startDate: Date,
+  endDate: Date
 });
 
 module.exports = mongoose.model("Event", eventSchema);
