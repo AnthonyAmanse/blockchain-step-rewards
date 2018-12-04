@@ -29,7 +29,7 @@ spec:
         app: mobile-assets
     spec:
       containers:
-        - image: anthonyamanse/mobile-assets:test-event
+        - image: anthonyamanse/mobile-assets:2.0
           imagePullPolicy: Always
           name: mobile-assets
           env:
@@ -38,6 +38,21 @@ spec:
                 configMapKeyRef:
                   name: mongodb-url
                   key: MONGODB_URL
+            - name: COS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cos-credentials
+                  key: cos-api-key
+            - name: COS_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: cos-credentials
+                  key: cos-endpoint
+            - name: COS_SERVICE_INSTANCE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cos-credentials
+                  key: cos-service-id
           volumeMounts:
             - name: mongodb-cert
               mountPath: "/etc/ssl"

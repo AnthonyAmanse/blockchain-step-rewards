@@ -37,3 +37,7 @@ spec:
         backend:
           serviceName: mobile-assets
           servicePort: 8080
+      - path: /buckets
+        backend:
+          serviceName: mobile-assets
+          servicePort: 8080

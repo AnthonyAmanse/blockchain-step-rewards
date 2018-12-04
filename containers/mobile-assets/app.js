@@ -6,6 +6,7 @@ const fs = require("fs");
 const cors = require("cors");
 
 const pagesRoute = require("./routes/pages");
+const assetsRoute = require("./routes/assets");
 
 const mongoDbUrl = process.env.MONGODB_URL;
 let ca;
@@ -54,6 +55,8 @@ app.use("/pages/:event", function(req, res, next) {
   req.EVENT_NAME = req.params.event;
   next();
 }, pagesRoute);
+
+app.use("/buckets", assetsRoute);
 
 let port = process.env.PORT || 8080;
 app.listen(port, function() {
