@@ -27,7 +27,7 @@ router.get("/", function(req, res) {
 // get bucket
 router.get("/:bucketName", function(req, res) {
   cos.listObjects({
-      Bucket: req.params.bucketName
+      Bucket: "kubecoin-prod-" + req.params.bucketName
     })
     .promise()
     .then(function (data) {
@@ -41,7 +41,7 @@ router.get("/:bucketName", function(req, res) {
 // get object
 router.get("/:bucketName/:objectName", function(req, res) {
   cos.getObject({
-      Bucket: req.params.bucketName,
+      Bucket: "kubecoin-prod-" + req.params.bucketName,
       Key: req.params.objectName
     })
     .promise()
@@ -56,7 +56,7 @@ router.get("/:bucketName/:objectName", function(req, res) {
 // upload object
 router.post("/:bucketName/:objectName", upload.single('image'), function(req, res) {
   cos.putObject({
-    Bucket: req.params.bucketName,
+    Bucket: "kubecoin-prod-" + req.params.bucketName,
     Key: req.params.objectName,
     Body: req.file.buffer
   }).promise()
