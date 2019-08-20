@@ -5,60 +5,78 @@ metadata:
   annotations:
     # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
     volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
-  name: peer-claim
+  name: shared-storage-claim
   labels:
-    app: peer-volume
+    app: shared-storage-volume
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  annotations:
-    # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
-    volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
-  name: org-ca-claim
-  labels:
-    app: org-ca-volume
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 20Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  annotations:
-    # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
-    volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
-  name: couchdb-claim
-  labels:
-    app: couchdb-volume
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 20Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  annotations:
-    # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
-    volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
-  name: shared-artifacts-claim
-  labels:
-    app: shared-artifacts-volume
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 20Gi
+
+
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   annotations:
+#     # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+#     volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
+#   name: peer-claim
+#   labels:
+#     app: peer-volume
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   annotations:
+#     # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+#     volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
+#   name: org-ca-claim
+#   labels:
+#     app: org-ca-volume
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   annotations:
+#     # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+#     volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
+#   name: couchdb-claim
+#   labels:
+#     app: couchdb-volume
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   annotations:
+#     # volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+#     volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
+#   name: shared-artifacts-claim
+#   labels:
+#     app: shared-artifacts-volume
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Gi

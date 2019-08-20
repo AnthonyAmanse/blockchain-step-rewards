@@ -37,16 +37,13 @@ spec:
           - name: FABRIC_CA_SERVER_TLS_ENABLED
             value: "false"
         volumeMounts:
-        - name: fitcoin-ca-storage
+        - name: shared-storage
           mountPath: /db
           subPath: fitcoin-ca-db-new
-        - name: shared-artifacts-storage
+        - name: shared-storage
           mountPath: /ca
           subPath: fitcoin-ca-config
       volumes:
-      - name: fitcoin-ca-storage
+      - name: shared-storage
         persistentVolumeClaim:
-          claimName: org-ca-claim
-      - name: shared-artifacts-storage
-        persistentVolumeClaim:
-          claimName: shared-artifacts-claim
+          claimName: shared-storage-claim

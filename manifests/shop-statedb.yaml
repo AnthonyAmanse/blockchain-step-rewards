@@ -30,10 +30,10 @@ spec:
         ports:
         - containerPort: 5984
         volumeMounts:
-        - name: shop-datastore-storage
+        - name: shared-storage
           mountPath: /opt/couchdb/data
           subPath: shop-statedb-new
       volumes:
-      - name: shop-datastore-storage
+      - name: shared-storage
         persistentVolumeClaim:
-          claimName: couchdb-claim
+          claimName: shared-storage-claim

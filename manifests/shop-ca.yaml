@@ -37,16 +37,13 @@ spec:
           - name: FABRIC_CA_SERVER_TLS_ENABLED
             value: "false"
         volumeMounts:
-        - name: shop-ca-storage
+        - name: shared-storage
           mountPath: /db
           subPath: shop-ca-db-new
-        - name: shared-artifacts-storage
+        - name: shared-storage
           mountPath: /ca
           subPath: shop-ca-config
       volumes:
-      - name: shop-ca-storage
+      - name: shared-storage
         persistentVolumeClaim:
-          claimName: org-ca-claim
-      - name: shared-artifacts-storage
-        persistentVolumeClaim:
-          claimName: shared-artifacts-claim
+          claimName: shared-storage-claim

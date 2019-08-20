@@ -7,10 +7,10 @@ const config = {
   chaincodeId: 'bcfit',
   chaincodeVersion: '1',
   chaincodePath: 'bcfit',
-  rabbitmq: 'amqps://admin:IXIHROUISBZJPEPW@portal-ssl285-31.bmix-dal-yp-70b203d2-491a-4977-a5fb-bddf83921f76.421838044.composedb.com:51900/bmix-dal-yp-70b203d2-491a-4977-a5fb-bddf83921f76',
+  rabbitmq: 'amqps://admin:ZUMLTUHNMUUKSWLY@portal-ssl447-54.bmix-dal-yp-696b67f2-db32-4872-89cd-2c3170912760.421838044.composedb.com:22565/bmix-dal-yp-696b67f2-db32-4872-89cd-2c3170912760',
   // redisHost: 'redis-server',
   // redisPort: 7000,
-  redisUrl: 'redis://admin:KIQKOJWXUBFIXGEP@sl-us-south-1-portal.31.dblayer.com:52062',
+  redisUrl: 'redis://admin:UURXTLJSUVUFTXZQ@sl-us-south-1-portal.54.dblayer.com:22563',
   orderer: {
     hostname: 'orderer0',
     url: 'grpc://orderer0' + ':7050',

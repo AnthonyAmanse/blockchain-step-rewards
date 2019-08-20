@@ -53,7 +53,7 @@ spec:
           - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
             value: ""
           - name: CORE_VM_ENDPOINT
-            value: "unix:///host/var/run/docker.sock"
+            value: "tcp://docker:2375"
           - name: CORE_LOGGING_LEVEL
             value: "DEBUG"
           - name: CORE_PEER_TLS_ENABLED
@@ -87,21 +87,13 @@ spec:
           - name: CORE_VM_DOCKER_ATTACHSTDOUT
             value: "true"
         volumeMounts:
-          - name: dockersocket
-            mountPath: /host/var/run/docker.sock
-          - name: shop-peer-storage
+          - name: shared-storage
             mountPath: /var/hyperledger/production
             subPath: shop-peer-new
-          - name: shared-artifacts-storage
+          - name: shared-storage
             mountPath: /peer
             subPath: shop-peer-config
       volumes:
-        - name: dockersocket
-          hostPath:
-            path: /var/run/docker.sock
-        - name: shop-peer-storage
+        - name: shared-storage
           persistentVolumeClaim:
-            claimName: peer-claim
-        - name: shared-artifacts-storage
-          persistentVolumeClaim:
-            claimName: shared-artifacts-claim
+            claimName: shared-storage-claim

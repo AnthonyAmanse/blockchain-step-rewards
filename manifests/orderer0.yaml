@@ -55,16 +55,13 @@ spec:
           # - name: ORDERER_GENERAL_TLS_ROOTCAS
           #   value: "[/orderer/crypto/tls/ca.crt]"
         volumeMounts:
-          - name: orderer0-storage
+          - name: shared-storage
             mountPath: /var/hyperledger/production
             subPath: orderer0-new
-          - name: shared-artifacts-storage
+          - name: shared-storage
             mountPath: /orderer
             subPath: orderer0-config
       volumes:
-        - name: orderer0-storage
+        - name: shared-storage
           persistentVolumeClaim:
-            claimName: peer-claim
-        - name: shared-artifacts-storage
-          persistentVolumeClaim:
-            claimName: shared-artifacts-claim
+            claimName: shared-storage-claim

@@ -30,10 +30,10 @@ spec:
         ports:
         - containerPort: 5984
         volumeMounts:
-        - name: ca-datastore-storage
+        - name: shared-storage
           mountPath: /opt/couchdb/data
           subPath: ca-datastore-new
       volumes:
-      - name: ca-datastore-storage
+      - name: shared-storage
         persistentVolumeClaim:
-          claimName: couchdb-claim
+          claimName: shared-storage-claim

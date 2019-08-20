@@ -30,10 +30,10 @@ spec:
         ports:
         - containerPort: 5984
         volumeMounts:
-        - name: fitcoin-datastore-storage
+        - name: shared-storage
           mountPath: /opt/couchdb/data
           subPath: fitcoin-statedb-new
       volumes:
-      - name: fitcoin-datastore-storage
+      - name: shared-storage
         persistentVolumeClaim:
-          claimName: couchdb-claim
+          claimName: shared-storage-claim
